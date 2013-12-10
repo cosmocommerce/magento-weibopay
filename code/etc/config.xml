@@ -1,0 +1,155 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * @category    CosmoCommerce
+ * @package     CosmoCommerce_Sinapay
+ * @copyright   Copyright (c) 2009-2013 CosmoCommerce,LLC. (http://www.cosmocommerce.com)
+ * @contact :
+ * T: +86-021-66346672
+ * L: Shanghai,China
+ * M:sales@cosmocommerce.com
+ */
+-->
+<config>
+    <modules>
+        <CosmoCommerce_Sinapay>
+            <version>1.5.0</version>
+        </CosmoCommerce_Sinapay>
+    </modules>
+    <global>
+        <models>
+            <sinapay>
+                <class>CosmoCommerce_Sinapay_Model</class>
+                <resourceModel>sinapay_mysql4</resourceModel>
+            </sinapay>
+            <sinapay_mysql4>
+                <class>CosmoCommerce_Sinapay_Model_Mysql4</class>
+                <entities>
+                    <api_debug><table>sinapay_api_debug</table></api_debug>
+                </entities>
+            </sinapay_mysql4>
+        </models>
+        <resources>
+            <sinapay_setup>
+                <setup>
+                    <module>CosmoCommerce_Sinapay</module>
+                    <class>CosmoCommerce_Sinapay_Model_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </sinapay_setup>
+            <sinapay_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </sinapay_write>
+            <sinapay_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </sinapay_read>
+        </resources>
+        <blocks>
+            <sinapay><class>CosmoCommerce_Sinapay_Block</class></sinapay>
+    	</blocks>
+        <payment>
+            <sinapay_payment>
+                <languages>
+                    <FR>
+                        <code>FR</code>
+                        <name>Français</name>
+                    </FR>
+                    <EN>
+                        <code>EN</code>
+                        <name>Anglais</name>
+                    </EN>
+                    <ES>
+                        <code>ES</code>
+                        <name>Espagnol</name>
+                    </ES>
+                    <DE>
+                        <code>DE</code>
+                        <name>Allemand</name>
+                    </DE>
+                    <IT>
+                        <code>IT</code>
+                        <name>Italien</name>
+                    </IT>
+                    <NL>
+                        <code>NL</code>
+                        <name>Néerlandais</name>
+                    </NL>
+                </languages>
+            </sinapay_payment>
+        </payment>
+		  <helpers>
+		  	   <sinapay>
+		  	   	   <class>CosmoCommerce_Sinapay_Helper</class>
+		  	   </sinapay>
+		  </helpers>
+    </global>
+    <frontend>
+        <secure_url>
+            <sinapay_payment>/sinapay/payment</sinapay_payment>
+        </secure_url>
+        <routers>
+            <sinapay>
+                <use>standard</use>
+                <args>
+                    <module>CosmoCommerce_Sinapay</module>
+                    <frontName>sinapay</frontName>
+                </args>
+            </sinapay>
+        </routers>
+        <translate>
+            <modules>
+                <CosmoCommerce_Sinapay>
+                    <files>
+                        <default>CosmoCommerce_Sinapay.csv</default>
+                    </files>
+                </CosmoCommerce_Sinapay>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <sinapay>
+                    <file>sinapay.xml</file>
+                </sinapay>
+            </updates>
+        </layout>
+    </frontend>
+    <adminhtml>
+        <translate>
+            <modules>
+                <CosmoCommerce_Sinapay>
+                    <files>
+                        <default>CosmoCommerce_Sinapay.csv</default>
+                    </files>
+                </CosmoCommerce_Sinapay>
+            </modules>
+        </translate>
+    </adminhtml>
+    <default>
+        <payment>
+            <sinapay_payment>
+                  <model>sinapay/payment</model>
+                  <title>Sinapay</title>
+                  <allowspecific>0</allowspecific>
+                  <transaction_type>O</transaction_type>
+            </sinapay_payment>
+        </payment>
+    </default>
+</config>
