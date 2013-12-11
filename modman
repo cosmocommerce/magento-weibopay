@@ -1,9 +1,9 @@
-code                                   app/code/community/CosmoCommerce/Alipay
+code                                   app/code/community/CosmoCommerce/Sinapay
 frontend/template      app/design/frontend/base/default/template/sinapay
 frontend/layout/sinapay.xml      app/design/frontend/base/default/layout/sinapay.xml
-locale/zh_CN/CosmoCommerce_Alipay.csv      app/locale/zh_CN/CosmoCommerce_Alipay.csv
-locale/en_US/CosmoCommerce_Alipay.csv      app/locale/en_US/CosmoCommerce_Alipay.csv
-CosmoCommerce_Alipay.xml                          app/etc/modules/CosmoCommerce_Alipay.xml
+locale/zh_CN/CosmoCommerce_Sinapay.csv      app/locale/zh_CN/CosmoCommerce_Sinapay.csv
+locale/en_US/CosmoCommerce_Sinapay.csv      app/locale/en_US/CosmoCommerce_Sinapay.csv
+CosmoCommerce_Sinapay.xml                          app/etc/modules/CosmoCommerce_Sinapay.xml
 skin/sinapay.css      skin/frontend/base/default/css/sinapay.css
 skin/sinapay.js      skin/frontend/base/default/js/sinapay.js
 skin/sinapay.gif      skin/frontend/base/default/images/sinapay.gif
