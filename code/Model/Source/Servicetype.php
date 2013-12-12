@@ -25,10 +25,7 @@ class CosmoCommerce_Sinapay_Model_Source_Servicetype
     public function toOptionArray()
     {
         return array(
-            array('value' => 'create_forex_trade', 'label' => Mage::helper('sinapay')->__('Create Forex Trade')),
-            array('value' => 'trade_create_by_buyer', 'label' => Mage::helper('sinapay')->__('Trade Create By Buyer')),
-            array('value' => 'create_direct_pay_by_user', 'label' => Mage::helper('sinapay')->__('Create Direct Pay By User')),
-            array('value' => 'create_partner_trade_by_buyer', 'label' => Mage::helper('sinapay')->__('Create Partner Trade By Buyer')),
+            array('value' => 'create_forex_trade', 'label' => Mage::helper('sinapay')->__('新浪钱包')),
         );
     }
 }

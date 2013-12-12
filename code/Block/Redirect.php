@@ -45,7 +45,6 @@ class CosmoCommerce_Sinapay_Block_Redirect extends Mage_Core_Block_Abstract
         $html.= '<script type="text/javascript">document.getElementById("sinapay_payment_checkout").submit();</script>';
         $html.= '</body></html>';
 
-
         return $html;
     }
 }

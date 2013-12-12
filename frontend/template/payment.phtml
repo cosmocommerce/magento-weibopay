@@ -23,7 +23,7 @@ $_order->loadByIncrementId($session->getLastRealOrderId());
                         <ul  class="shortcut_bank_table shortcut_bank_web">
 
                         <li class="bank_item">
-                        <p class="bank_select" bid="51"><input type="radio" name="bank" checked="checked"><span class="pic"><img src="<?php echo $this->getSkinUrl('images/alipay.gif'); ?>" id="Repeater2_ctl03_imgBank2" width="113" height="36"></span></p>
+                        <p class="bank_select" bid="51"><input type="radio" name="bank" checked="checked"><span class="pic"><img src="<?php echo $this->getSkinUrl('images/sinapay.gif'); ?>" id="Repeater2_ctl03_imgBank2" width="113" height="36"></span></p>
                         <p class="hint">中国最大的第三方支付方式</p>                  
                         </li>      
                         </ul>
@@ -37,7 +37,7 @@ $_order->loadByIncrementId($session->getLastRealOrderId());
                         top   = (jQuery(window).height()/2)-(600/2);
     
     
-                        window.open('<?php echo $this->getUrl('alipay/payment/redirect'); ?>', 'alipay', "width=900, height=600, top="+top+", left="+left);
+                        window.open('<?php echo $this->getUrl('sinapay/payment/redirect'); ?>', 'sinapay', "width=900, height=600, top="+top+", left="+left);
                         
                         var left  = (jQuery(window).width()/2)-(392/2),
                         top   = (jQuery(window).height()/2)-(160/2);
@@ -58,7 +58,7 @@ $_order->loadByIncrementId($session->getLastRealOrderId());
     <div><a href="<?php echo $this->getUrl('sales/order/view',array('order_id'=>$_order->getId())); ?>" target="_blank">查看订单详情&gt;&gt;</a></div>
     <div class="title">付款遇到问题：</div>
     <p>联系我们 <span class="gray"> 客服帮助您解决支付过程中遇到的困难 <a href="<?php echo $this->getUrl('contacts'); ?>" target="_blank" >客服中心</a> </span></p>
-    <div><a href="http://help.alipay.com/lab/index.htm" target="_blank">支付宝帮助中心&nbsp;&gt;&gt;</a></div>
+    <div><a href="http://help.sinapay.com/lab/index.htm" target="_blank">支付宝帮助中心&nbsp;&gt;&gt;</a></div>
   </div>
 </div>
 

@@ -125,113 +125,43 @@ class CosmoCommerce_Sinapay_PaymentController extends Mage_Core_Controller_Front
 		
 		$partner=$sinapay->getConfigData('partner_id');
 		$security_code=$sinapay->getConfigData('security_code');
-		$sign_type='MD5';
-		$mysign="";
-		$_input_charset='utf-8';
-		$transport=$sinapay->getConfigData('transport');
+		$sendemail=$sinapay->getConfigData('sendemail'); 
 		
-		$gateway = $this->_gateway;
-
-		if($transport == "https") {
-			$veryfy_url = $gateway. "service=notify_verify" ."&partner=" .$partner. "&notify_id=".$postData["notify_id"];
-		} else {
-			$veryfy_url = $gateway. "partner=".$partner."&notify_id=".$postData["notify_id"];
-		}	
-
-		$veryfy_result="";
-		$veryfy_result  = $this->get_verify($veryfy_url);
+		$merchantAcctId=$postData["merchantAcctId"];
+		$version=$postData["version"];
+		$language=$postData["language"];
+		$signType=$postData["signType"];
+		$payType=$postData["payType"];
+		$bankId=$postData["bankId"];
+		$orderId=$postData["orderId"];
+		$orderTime=$postData["orderTime"];
+		$orderAmount=$postData["orderAmount"];
+		$dealId=$postData["dealId"];
+		$bankDealId=$postData["bankDealId"];
+		$dealTime=$postData["dealTime"];
+		$payAmount=$postData["payAmount"];
+		$fee=$postData["fee"];
+		$payResult=$postData["payResult"];
+		$errCode=$postData["errCode"];
+		$key=$postData["key"];
 		
-		$post           = $this->para_filter($postData);
-		
-		
-		$sort_post      = $this->arg_sort($post);
-		
-		$arg="";
-		while (list ($key, $val) = each ($sort_post)) {
-		
-			$arg.=$key."=".$val."&";
+		$Msg="";
+		foreach($postData as $key=>$value){
+			if($key!="key"){
+				$Msg.=$key."=".$value."&";
+			}
 		}
-		$prestr="";
-		$prestr = substr($arg,0,count($arg)-2);  //去掉最后一个&号
-		$mysign = $this->sign($prestr.$security_code);
+		$Msg.="security_code=".$security_code;
+		
+		$signMsg=strtolower(md5($Msg));
 		
 		
-		$sendemail=$sinapay->getConfigData('sendemail');
-		$sendemail_wbp=$sinapay->getConfigData('sendemail_wbp');
-		$sendemail_wssg=$sinapay->getConfigData('sendemail_wssg');
-		$sendemail_wbcg=$sinapay->getConfigData('sendemail_wbcg');
-		Mage::log(strpos($veryfy_result,"true"));
 		
-		if ( $mysign == $postData["sign"])  {
-			
-			
-			if($postData['trade_status'] == 'WAIT_BUYER_PAY') {                   //等待买家付款
-				
+		
+		if ( $signMsg == $postData["key"])  {
+			if($postData['trade_status'] == 'TRADE_FINISHED' || $postData['trade_status'] == "TRADE_SUCCESS") {   
 				$order = Mage::getModel('sales/order');
-				$order->loadByIncrementId($postData['out_trade_no']);
-				//$order->setSinapayTradeno($postData['trade_no']);
-                if($sendemail_wbp){
-                    $order->sendNewOrderEmail();
-                }
-                        
-                if ($order->getState() == 'new' ) {
-                    $order->addStatusToHistory(
-                    $order->getStatus(),
-                    Mage::helper('sinapay')->__('等待买家付款。'));
-                    try{
-                        $order->save();
-                        echo "success";
-                    } catch(Exception $e){
-                        
-                    }
-                }
-                
-			}
-			else if($postData['trade_status'] == 'WAIT_SELLER_SEND_GOODS') {      //买家付款成功,等待卖家发货
-				
-				$order = Mage::getModel('sales/order');
-				$order->loadByIncrementId($postData['out_trade_no']);
-				//$order->setSinapayTradeno($postData['trade_no']);
-                if($sendemail_wssg){
-                    $order->sendOrderUpdateEmail(false,'买家付款成功,等待卖家发货。');
-                }
-                if ($order->getState() == 'new' || $order->getState() == 'processing' ||  $order->getState() == 'pending_payment' || $order->getState() == 'payment_review') {
-                    $order->setStatus(Mage_Sales_Model_Order::STATE_PROCESSING);
-                    $order->addStatusToHistory(
-                    $sinapay->getConfigData('order_status_payment_accepted'),
-                    Mage::helper('sinapay')->__('买家付款成功,等待卖家发货。'));
-                    try{
-                        $order->save();
-                        echo "success";
-                    } catch(Exception $e){
-                        
-                    }
-                }
-			}
-			else if($postData['trade_status'] == 'WAIT_BUYER_CONFIRM_GOODS') {    //卖家已经发货等待买家确认
-			
-				$order = Mage::getModel('sales/order');
-				$order->loadByIncrementId($postData['out_trade_no']);
-                if ($order->getState() == 'new' || $order->getState() == 'processing' || $order->getState() == 'pending_payment' || $order->getState() == 'payment_review') {
-                    //$order->setSinapayTradeno($postData['trade_no']);
-                    $order->setStatus(Mage_Sales_Model_Order::STATE_PROCESSING);
-                    if($sendemail_wbcg){
-                        $order->sendOrderUpdateEmail(true,'卖家已经发货等待买家确认。');
-                    }
-                    $order->addStatusToHistory(
-                    $sinapay->getConfigData('order_status_payment_accepted'),
-                    Mage::helper('sinapay')->__('卖家已经发货等待买家确认。'));
-                    try{
-                        $order->save();
-                        echo "success";
-                    } catch(Exception $e){
-                    }
-                }
-
-			}
-			else if($postData['trade_status'] == 'TRADE_FINISHED' || $postData['trade_status'] == "TRADE_SUCCESS") {   
-				$order = Mage::getModel('sales/order');
-				$order->loadByIncrementId($postData['out_trade_no']);
+				$order->loadByIncrementId($orderId);
                 if ($order->getState() == 'new' || $order->getState() == 'processing' || $order->getState() == 'pending_payment' || $order->getState() == 'payment_review') {
                     //$order->setSinapayTradeno($postData['trade_no']);
                     $order->setStatus(Mage_Sales_Model_Order::STATE_PROCESSING);
@@ -243,19 +173,21 @@ class CosmoCommerce_Sinapay_PaymentController extends Mage_Core_Controller_Front
                     Mage::helper('sinapay')->__('买家已付款,交易成功结束。'));
                     try{
                         $order->save();
-                        echo "success";
+                        echo "<result>1</result><redirecturl><![CDATA[".$this->getUrl('checkout/onepage/success')."]]></redirecturl>";
+						exit();
                     } catch(Exception $e){
                         
                     }
                 }
 			}
 			else {
-				echo "fail";
-				Mage::log("x");
+				exit();
+				Mage::log($postData);
 			}	
 
 		} else {
-			echo "fail";
+			exit();
+			Mage::log($postData);
 		}
     }
 

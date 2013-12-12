@@ -24,12 +24,12 @@
 -->
 <config>
     <modules>
-        <CosmoCommerce_Alipay>
+        <CosmoCommerce_Sinapay>
             <active>true</active>
             <codePool>community</codePool>
             <depends>
                 <Mage_Payment/>
             </depends>
-        </CosmoCommerce_Alipay>
+        </CosmoCommerce_Sinapay>
     </modules>
 </config>

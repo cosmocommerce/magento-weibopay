@@ -30,9 +30,9 @@ class CosmoCommerce_Sinapay_Model_Payment extends Mage_Payment_Model_Method_Abst
     //测试URL: http://testpay.sina.com.cn/openserver/1/order/query
     //线上URL: http://pay.sina.com.cn/openserver/1/order/query
     
-	protected $_gateway="http://testpay.sina.com.cn/openserver/1/order/?";
-
-    
+	protected $_gateway="https://testgate.pay.sina.com.cn/acquire-order-channel/gateway/receiveOrderLoading.htm?";
+	//https://testmas.weibopay.com/acquire-order-channel/gateway/receiveOrderLoading.htm
+     
     // Sinapay return codes of payment
     const RETURN_CODE_ACCEPTED      = 'Success';
     const RETURN_CODE_TEST_ACCEPTED = 'Success';
@@ -156,62 +156,49 @@ class CosmoCommerce_Sinapay_Model_Payment extends Mage_Payment_Model_Method_Abst
         }
 		
 		
-		$converted_final_price=$order->getGrandTotal();
-		$app_id=$this->getConfigData('app_id');
-		$cuid=$this->getConfigData('partner_id');
-		$appkey=$this->getConfigData('security_code');
-		$order_id= $app_id."_".$order->getRealOrderId();
      
-        order_time  20071117020101
-        amount  1000
-        notify_url
-        bank_code   可空
-        product_name    可空
-        product_num     可空
-        product_id      可空
-        product_desc    可空
-        redo_flag       0
-        sign_msg        strtolower(md5('cuid={cuid}&appkey={appkey}&order_id={order_id}&order_time ={order_time}&amount={amount}&notify_url={notify_url}&bank_code={bank_code}&product_name={product_name}&product_num={product_num}&product_id={product_id}&product_desc={product_desc}&redo_flag={redo_flag}&key ={app_secret}'));
-     
-        $parameter = array('cuid'           => $cuid,
-                           'appkey'           => $appkey,
-                           'order_id'      =>$order_id, // order ID
-                           'return_url'        => $this->getReturnURL(),
-                           'notify_url'        => $this->getNotifyURL(),
-                           '_input_charset'    => 'utf-8',
-                           'subject'           => $order->getRealOrderId(), 
-                           'body'              => $order->getRealOrderId(),
-                           'total_fee'             => sprintf('%.2f', $converted_final_price) ,
-                           'currency'      => 'USD'
-                        );
-		 
+	 
+		//必填五个字段
+		$inputCharset=1;
+		$bgUrl= $this->getNotifyURL();
+		$version="v2.3";
+		$language="1";
+		$signType="1";
 		
-		$parameter = $this->para_filter($parameter);
-		$security_code = $this->getConfigData('security_code');
-		$sign_type = 'MD5';
+		//买卖双方
+		$merchantAcctId=$this->getConfigData('seller_email');  //本参数用来指定接收款项的人民币账号
+
+		//业务参数
+		$orderId=$order->getRealOrderId();
+		$orderAmount=(sprintf('%.2f', $order->getGrandTotal()))*100;
+		$orderTime= date('Ymdhjs',strtotime($order->getCreatedAt()));
+		$pid=$this->getConfigData('partner_id');  //商户的memberId
 		
-		$sort_array = array();
-		$arg = "";
-		$sort_array = $this->arg_sort($parameter); //$parameter
+		$key=$this->getConfigData('security_code');
 		
-		while (list ($key, $val) = each ($sort_array)) {
-			$arg.=$key."=".$this->charset_encode($val,$parameter['_input_charset'])."&";
-		}
+		$Msg="inputCharset={$inputCharset}&bgUrl={$bgUrl}&version={$version}&language={$language}&signType={$signType}&merchantAcctId={$merchantAcctId}&orderId={$orderId}&orderAmount={$orderAmount}&orderTime={$orderTime}&pid={$pid}&key={$key}";
 		
-		$prestr = substr($arg,0,count($arg)-2);
+		$signMsg=strtolower(md5($Msg));
 		
-		$mysign = $this->sign($prestr.$security_code);
 		
-		$fields = array();
-		$sort_array = array();
-		$arg = "";
-		$sort_array = $this->arg_sort($parameter); //$parameter
-		while (list ($key, $val) = each ($sort_array)) {
-			$fields[$key] = $this->charset_encode($val,'utf-8');
-		}
-		$fields['sign'] = $mysign;
-		$fields['sign_type'] = $sign_type;
-        return $fields;
+
+
+        $parameter = array();
+		$parameter['inputCharset']=$inputCharset;
+		$parameter['bgUrl']=$bgUrl;
+		$parameter['version']=$version;
+		$parameter['language']=$language;
+		$parameter['signType']=$signType;
+		$parameter['merchantAcctId']=$merchantAcctId;
+		$parameter['orderId']=$orderId;
+		$parameter['orderAmount']=$orderAmount;
+		$parameter['orderTime']=$orderTime;
+		$parameter['pid']=$pid;
+		$parameter['signMsg']=$signMsg;
+		
+		
+		
+        return $parameter;
     }
     
 	public function sign($prestr) {

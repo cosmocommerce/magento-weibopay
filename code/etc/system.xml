@@ -64,47 +64,11 @@
 							  </comment>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
-                            <sort_order>1</sort_order>
+                            <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </sendemail>
-                        <sendemail_wbp translate="label comment">
-                            <label>发送邮件：担保交易-等待付款</label>
-							  <comment>
-								<![CDATA[发送邮件：担保交易-等待买家付款]]>
-							  </comment>
-                            <frontend_type>select</frontend_type>
-                            <source_model>adminhtml/system_config_source_yesno</source_model>
-                            <sort_order>1</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </sendemail_wbp>
-                        <sendemail_wssg translate="label comment">
-                            <label>发送邮件：担保交易-等待发货</label>
-							  <comment>
-								<![CDATA[发送邮件：担保交易-买家付款成功,等待卖家发货]]>
-							  </comment>
-                            <frontend_type>select</frontend_type>
-                            <source_model>adminhtml/system_config_source_yesno</source_model>
-                            <sort_order>1</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </sendemail_wssg>
-                        <sendemail_wbcg translate="label comment">
-                            <label>发送邮件：担保交易-等待确认</label>
-							  <comment>
-								<![CDATA[发送邮件：担保交易-卖家已经发货等待买家确认]]>
-							  </comment>
-                            <frontend_type>select</frontend_type>
-                            <source_model>adminhtml/system_config_source_yesno</source_model>
-                            <sort_order>1</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </sendemail_wbcg>
                         <service_type translate="label comment">
                             <label>Contract Type</label>
 							  <comment>
