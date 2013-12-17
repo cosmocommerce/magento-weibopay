@@ -7,3 +7,5 @@ CosmoCommerce_Sinapay.xml                          app/etc/modules/CosmoCommerce
 skin/sinapay.css      skin/frontend/base/default/css/sinapay.css
 skin/sinapay.js      skin/frontend/base/default/js/sinapay.js
 skin/sinapay.gif      skin/frontend/base/default/images/sinapay.gif
+skin/xyb.jpg      skin/frontend/base/default/images/xyb.jpg
+skin/logoL.png      skin/frontend/base/default/images/logoL.png
