@@ -25,8 +25,7 @@ class CosmoCommerce_Sinapay_PaymentController extends Mage_Core_Controller_Front
     /**
      * Order instance
      */
-    protected $_order;
-	protected $_gateway="https://mapi.sinapay.com/gateway.do?";
+    protected $_order; 
 
     /**
      *  Get order

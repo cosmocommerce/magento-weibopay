@@ -59,6 +59,10 @@ class CosmoCommerce_Sinapay_Model_Payment extends Mage_Payment_Model_Method_Abst
      */
     public function getSinapayUrl()
     {
+		$sandbox=$this->getConfigData('sandbox');
+        if(!$sandbox){
+            $this->_gateway="https://gate.pay.sina.com.cn/acquire-order-channel/gateway/receiveOrderLoading.htm";
+        }
         $url = $this->_gateway;
         return $url;
     }
@@ -171,7 +175,7 @@ class CosmoCommerce_Sinapay_Model_Payment extends Mage_Payment_Model_Method_Abst
 		//业务参数
 		$orderId=$order->getRealOrderId();
 		$orderAmount=(sprintf('%.2f', $order->getGrandTotal()))*100;
-		$orderTime= date('Ymdhjs',strtotime($order->getCreatedAt()));
+		$orderTime= date('Ymdhis',strtotime($order->getCreatedAt()));
 		$pid=$this->getConfigData('partner_id');  //商户的memberId
 		
 		$key=$this->getConfigData('security_code');
@@ -195,8 +199,6 @@ class CosmoCommerce_Sinapay_Model_Payment extends Mage_Payment_Model_Method_Abst
 		$parameter['orderTime']=$orderTime;
 		$parameter['pid']=$pid;
 		$parameter['signMsg']=$signMsg;
-		
-		
 		
         return $parameter;
     }
