@@ -152,13 +152,17 @@ class CosmoCommerce_Sinapay_PaymentController extends Mage_Core_Controller_Front
 		}
 		$Msg.="security_code=".$security_code;
 		
+        Mage::log($postData,null,'weibopay_callback.log');
 		$signMsg=strtolower(md5($Msg));
 		
 		
 		
+        Mage::log($signMsg,null,'weibopay_callback.log');
 		
 		if ( $signMsg == $postData["key"])  {
 			if($postData['trade_status'] == 'TRADE_FINISHED' || $postData['trade_status'] == "TRADE_SUCCESS") {   
+		
+                Mage::log('交易成功',null,'weibopay_callback.log');
 				$order = Mage::getModel('sales/order');
 				$order->loadByIncrementId($orderId);
                 if ($order->getState() == 'new' || $order->getState() == 'processing' || $order->getState() == 'pending_payment' || $order->getState() == 'payment_review') {
@@ -172,6 +176,7 @@ class CosmoCommerce_Sinapay_PaymentController extends Mage_Core_Controller_Front
                     Mage::helper('sinapay')->__('买家已付款,交易成功结束。'));
                     try{
                         $order->save();
+                        Mage::log('交易完成',null,'weibopay_callback.log');
                         echo "<result>1</result><redirecturl><![CDATA[".$this->getUrl('checkout/onepage/success')."]]></redirecturl>";
 						exit();
                     } catch(Exception $e){
@@ -180,13 +185,13 @@ class CosmoCommerce_Sinapay_PaymentController extends Mage_Core_Controller_Front
                 }
 			}
 			else {
+                Mage::log('交易失败',null,'weibopay_callback.log');
 				exit();
-				Mage::log($postData);
 			}	
 
 		} else {
+            Mage::log('交易失败',null,'weibopay_callback.log');
 			exit();
-			Mage::log($postData);
 		}
     }
 
