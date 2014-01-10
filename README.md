@@ -1,11 +1,8 @@
-#Magento Alipay Payment Gateway Module![project status](http://stillmaintained.com/sidealice/aliyun-paas.png)#
+#Magento Weibopay  Payment Gateway Module![project status](http://stillmaintained.com/sidealice/aliyun-paas.png)#
 ==============
 
 Support payment types:
-* Create Forex Trade:Internation Payments Type
-* Trade Create By Buyer
-* Create Direct Pay By User
-* Create Partner Trade By Buyer
+* Weibo Wallet 微博钱包
 
 If you have trouble to choose the type please contact payment@cosmocommerce.com 
 
@@ -39,7 +36,7 @@ bash < <(curl -s https://raw.github.com/colinmollenhour/modman/master/modman-ins
 
 3 modman clone https://github.com/cosmocommerce/magento-updater.git
 
-4 modman clone https://github.com/cosmocommerce/magento-alipay.git
+4 modman clone https://github.com/cosmocommerce/magento-weibopay.git
 
 
 ## Documentation ##
