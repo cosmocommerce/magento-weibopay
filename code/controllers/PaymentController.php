@@ -126,41 +126,34 @@ class CosmoCommerce_Sinapay_PaymentController extends Mage_Core_Controller_Front
 		$security_code=$sinapay->getConfigData('security_code');
 		$sendemail=$sinapay->getConfigData('sendemail'); 
 		
-		$merchantAcctId=$postData["merchantAcctId"];
-		$version=$postData["version"];
-		$language=$postData["language"];
-		$signType=$postData["signType"];
-		$payType=$postData["payType"];
-		$bankId=$postData["bankId"];
-		$orderId=$postData["orderId"];
-		$orderTime=$postData["orderTime"];
-		$orderAmount=$postData["orderAmount"];
-		$dealId=$postData["dealId"];
-		$bankDealId=$postData["bankDealId"];
-		$dealTime=$postData["dealTime"];
+        
+        
 		$payAmount=$postData["payAmount"];
+		$dealTime=$postData["dealTime"];
+		$signType=$postData["signType"];
+		$merchantAcctId=$postData["merchantAcctId"];
+		$orderTime=$postData["orderTime"];
+		$dealId=$postData["dealId"];
+		$version=$postData["version"];
 		$fee=$postData["fee"];
 		$payResult=$postData["payResult"];
-		$errCode=$postData["errCode"];
-		$key=$postData["key"];
+		$orderAmount=$postData["orderAmount"];
+		$language=$postData["language"];
+		$payIp=$postData["payIp"];
+		$orderId=$postData["orderId"];
+        
+		$Msg="merchantAcctId={$merchantAcctId}&version={$version}&language={$language}&signType={$signType}&orderId={$orderId}&orderTime={$orderTime}&orderAmount={$orderAmount}&dealId={$dealId}&dealTime={$dealTime}&payAmount={$payAmount}&fee={$fee}&payResult={$payResult}&payIp={$payIp}&key={$security_code}";
 		
-		$Msg="";
-		foreach($postData as $key=>$value){
-			if($key!="key"){
-				$Msg.=$key."=".$value."&";
-			}
-		}
-		$Msg.="security_code=".$security_code;
-		
-        Mage::log($postData,null,'weibopay_callback.log');
 		$signMsg=strtolower(md5($Msg));
+        
+        Mage::log($postData,null,'weibopay_callback.log');
 		
 		
 		
         Mage::log($signMsg,null,'weibopay_callback.log');
 		
-		if ( $signMsg == $postData["key"])  {
-			if($postData['trade_status'] == 'TRADE_FINISHED' || $postData['trade_status'] == "TRADE_SUCCESS") {   
+		if ( $signMsg == $postData["signMsg"])  {
+			if($postData['payResult'] == '10' ) {   
 		
                 Mage::log('交易成功',null,'weibopay_callback.log');
 				$order = Mage::getModel('sales/order');
@@ -176,8 +169,9 @@ class CosmoCommerce_Sinapay_PaymentController extends Mage_Core_Controller_Front
                     Mage::helper('sinapay')->__('买家已付款,交易成功结束。'));
                     try{
                         $order->save();
+                        echo "<result>1</result><redirecturl><![CDATA[".Mage::getUrl('checkout/onepage/success')."]]></redirecturl>";
+                    
                         Mage::log('交易完成',null,'weibopay_callback.log');
-                        echo "<result>1</result><redirecturl><![CDATA[".$this->getUrl('checkout/onepage/success')."]]></redirecturl>";
 						exit();
                     } catch(Exception $e){
                         
