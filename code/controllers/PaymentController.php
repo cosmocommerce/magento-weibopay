@@ -149,6 +149,8 @@ class CosmoCommerce_Sinapay_PaymentController extends Mage_Core_Controller_Front
         $pay_params["errCode"]=$postData["errCode"];
         $pay_params["signMsg"]=$postData["signMsg"];
         
+    //?payAmount=2&dealTime=20140112120149&signType=1&merchantAcctId=200100100120000414386201101&orderTime=20140112040001&dealId=2014011215666641&version=v2.3&bankId=CMB&fee=1&bankDealId=03140112022052399&payResult=10&orderAmount=2&signMsg=383febc4c6bfdc584de5293ca81ba7d8&language=1&payIp=113.139.236.208&orderId=100000011
+    //?payAmount=2&dealTime=20140110224635&signType=1&merchantAcctId=200100100120000414386201101&orderTime=20140110024531&dealId=2014011015604200&version=v2.3&fee=1&payResult=10&orderAmount=2&signMsg=dddfb9b3716e40092e7324b2ee198286&language=1&payIp=1.83.163.26&orderId=100000010
         
         $orderId=$postData["orderId"];
 		$params_str = "";
