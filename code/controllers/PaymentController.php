@@ -150,6 +150,7 @@ class CosmoCommerce_Sinapay_PaymentController extends Mage_Core_Controller_Front
         $pay_params["signMsg"]=$postData["signMsg"];
         
         
+        $orderId=$postData["orderId"];
 		$params_str = "";
 		$signMsg = "";
 		foreach($pay_params as $key=>$val){
