@@ -127,29 +127,43 @@ class CosmoCommerce_Sinapay_PaymentController extends Mage_Core_Controller_Front
 		$sendemail=$sinapay->getConfigData('sendemail'); 
 		
         
+        $pay_params=array();
+        $pay_params["merchantAcctId"]=$postData["merchantAcctId"];
+        $pay_params["version"]=$postData["version"];
+        $pay_params["language"]=$postData["language"];
+        $pay_params["signType"]=$postData["signType"];
+        $pay_params["payType"]=$postData["payType"];
+        $pay_params["bankId"]=$postData["bankId"];
+        $pay_params["orderId"]=$postData["orderId"];
+        $pay_params["orderTime"]=$postData["orderTime"];
+        $pay_params["orderAmount"]=$postData["orderAmount"];
+        $pay_params["dealId"]=$postData["dealId"];
+        $pay_params["bankDealId"]=$postData["bankDealId"];
+        $pay_params["dealTime"]=$postData["dealTime"];
+        $pay_params["payAmount"]=$postData["payAmount"];
+        $pay_params["fee"]=$postData["fee"];
+        $pay_params["ext1"]=$postData["ext1"];
+        $pay_params["ext2"]=$postData["ext2"];
+        $pay_params["payResult"]=$postData["payResult"];
+        $pay_params["payIp"]=$postData["payIp"];
+        $pay_params["errCode"]=$postData["errCode"];
+        $pay_params["signMsg"]=$postData["signMsg"];
         
-		$payAmount=$postData["payAmount"];
-		$dealTime=$postData["dealTime"];
-		$signType=$postData["signType"];
-		$merchantAcctId=$postData["merchantAcctId"];
-		$orderTime=$postData["orderTime"];
-		$dealId=$postData["dealId"];
-		$version=$postData["version"];
-		$fee=$postData["fee"];
-		$payResult=$postData["payResult"];
-		$orderAmount=$postData["orderAmount"];
-		$language=$postData["language"];
-		$payIp=$postData["payIp"];
-		$orderId=$postData["orderId"];
         
-		$Msg="merchantAcctId={$merchantAcctId}&version={$version}&language={$language}&signType={$signType}&orderId={$orderId}&orderTime={$orderTime}&orderAmount={$orderAmount}&dealId={$dealId}&dealTime={$dealTime}&payAmount={$payAmount}&fee={$fee}&payResult={$payResult}&payIp={$payIp}&key={$security_code}";
-		
-		$signMsg=strtolower(md5($Msg));
+		$params_str = "";
+		$signMsg = "";
+		foreach($pay_params as $key=>$val){
+			if($key!="signMsg" && !is_null($val) && @$val!="")
+			{
+				$params_str .= $key."=".$val."&";
+			}
+		}
+        $params_str .= "key=" . $security_code;
+        $signMsg = strtolower(md5($params_str));
         
-        Mage::log($postData,null,'weibopay_callback.log');
-		
-		
-		
+        
+        
+        Mage::log($pay_params,null,'weibopay_callback.log');
         Mage::log($signMsg,null,'weibopay_callback.log');
 		
 		if ( $signMsg == $postData["signMsg"])  {
