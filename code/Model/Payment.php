@@ -74,7 +74,7 @@ class CosmoCommerce_Sinapay_Model_Payment extends Mage_Payment_Model_Method_Abst
      */
 	protected function getReturnURL()
 	{
-		return Mage::getUrl('sinapay/payment/notify/', array('_secure' => true));
+		return Mage::getUrl('sinapay/payment/notify', array('_secure' => true));
 	}
 
 	/**
@@ -104,7 +104,7 @@ class CosmoCommerce_Sinapay_Model_Payment extends Mage_Payment_Model_Method_Abst
 	 */
 	protected function getNotifyURL()
 	{
-		return Mage::getUrl('sinapay/payment/notify/', array('_secure' => true));
+		return Mage::getUrl('sinapay/payment/notify', array('_secure' => true));
 	}
 
     /**
