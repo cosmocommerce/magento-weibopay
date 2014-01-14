@@ -5,6 +5,8 @@ $_order = Mage::getModel('sales/order');
 
 $_order->loadByIncrementId($session->getLastRealOrderId());
 ?>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+
 <div class="shortcut_wrapper">
     <div class="shortcut_price">
         <p class="price">支付金额：<span class="red"><?php echo $this->helper('checkout')->formatPrice($_order->getGrandTotal()) ?> </span></span></p>
@@ -37,7 +39,7 @@ $_order->loadByIncrementId($session->getLastRealOrderId());
                         top   = (jQuery(window).height()/2)-(600/2);
     
     
-                        window.open('<?php echo $this->getUrl('sinapay/payment/redirect'); ?>', 'sinapay', "width=900, height=600, top="+top+", left="+left);
+                        window.open('<?php echo $this->getUrl('sinapay/payment/redirect'); ?>');
                         
                         var left  = (jQuery(window).width()/2)-(392/2),
                         top   = (jQuery(window).height()/2)-(160/2);
