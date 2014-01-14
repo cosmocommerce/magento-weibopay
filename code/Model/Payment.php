@@ -142,7 +142,8 @@ class CosmoCommerce_Sinapay_Model_Payment extends Mage_Payment_Model_Method_Abst
      */
     public function getOrderPlaceRedirectUrl()
     {
-        return Mage::getUrl('sinapay/payment/pay');
+        //return Mage::getUrl('sinapay/payment/pay');
+        return Mage::getUrl('sinapay/payment/redirect');
     }
 
     /**
