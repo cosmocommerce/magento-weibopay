@@ -38,6 +38,7 @@ class CosmoCommerce_Sinapay_Model_Payment extends Mage_Payment_Model_Method_Abst
     const RETURN_CODE_TEST_ACCEPTED = 'Success';
     const RETURN_CODE_ERROR         = 'Fail';
 
+    protected $_bank  = '';
     // Payment configuration
     protected $_isGateway               = false;
     protected $_canAuthorize            = true;
@@ -145,6 +146,14 @@ class CosmoCommerce_Sinapay_Model_Payment extends Mage_Payment_Model_Method_Abst
         return Mage::getUrl('sinapay/payment/pay');
     }
 
+    public function setBank($bank)
+    {
+		$this->_bank =$bank;
+    }
+    public function getBank()
+    {
+		return $this->_bank;
+    }
     /**
      *  Return Standard Checkout Form Fields for request to Sinapay
      *
@@ -180,12 +189,16 @@ class CosmoCommerce_Sinapay_Model_Payment extends Mage_Payment_Model_Method_Abst
 		
 		$key=$this->getConfigData('security_code');
 		
-		$Msg="inputCharset={$inputCharset}&bgUrl={$bgUrl}&version={$version}&language={$language}&signType={$signType}&merchantAcctId={$merchantAcctId}&orderId={$orderId}&orderAmount={$orderAmount}&orderTime={$orderTime}&pid={$pid}&key={$key}";
+        $bankId=null;
+        if($this->getBank()){
+            $bankId=$this->getBank();
+            $Msg="inputCharset={$inputCharset}&bgUrl={$bgUrl}&version={$version}&language={$language}&signType={$signType}&merchantAcctId={$merchantAcctId}&orderId={$orderId}&orderAmount={$orderAmount}&orderTime={$orderTime}&bankId={$bankId}&pid={$pid}&key={$key}";
+        }else{
+            $Msg="inputCharset={$inputCharset}&bgUrl={$bgUrl}&version={$version}&language={$language}&signType={$signType}&merchantAcctId={$merchantAcctId}&orderId={$orderId}&orderAmount={$orderAmount}&orderTime={$orderTime}&pid={$pid}&key={$key}";
+        }
 		
 		$signMsg=strtolower(md5($Msg));
 		
-		
-
 
         $parameter = array();
 		$parameter['inputCharset']=$inputCharset;
@@ -197,6 +210,9 @@ class CosmoCommerce_Sinapay_Model_Payment extends Mage_Payment_Model_Method_Abst
 		$parameter['orderId']=$orderId;
 		$parameter['orderAmount']=$orderAmount;
 		$parameter['orderTime']=$orderTime;
+        if($this->getBank()){
+            $parameter['bankId']=$this->getBank();
+        }
 		$parameter['pid']=$pid;
 		$parameter['signMsg']=$signMsg;
 		
