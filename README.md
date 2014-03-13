@@ -1,6 +1,10 @@
 #Magento Weibopay  Payment Gateway Module![project status](http://stillmaintained.com/sidealice/aliyun-paas.png)#
 ==============
 
+
+本模块免费开源提供给最终商家,不允许修改著作权和署名权. 如需修改代码和改进模块请联系或fork我们的模块, 通过开源可以让模块永久开源,惠及广众. 
+
+
 Support payment types:
 * Weibo Wallet 微博钱包
 
