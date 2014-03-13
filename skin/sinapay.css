@@ -311,9 +311,9 @@ position: relative;
 z-index: 1;
 }
 .bank_item{float:left;width: 160px;}
-.ABC, .BJBANK, .BJRCB, .BOC, .CCB, .CDCB, .CEB, .CIB, .CITIC, .CMB, .CMBC, .COMM, .FDB, .GDB, .HZCB, .ICBC, .NBBANK, .PSBC, .SHBANK, .SHRCB, .SPABANK, .SPDB, .WZCB {text-indent: -9999px; background-image: url("../images/banks.png");} 
+.ABC, .SZPAB,.BCCB,.BOS,.BJBANK, .BJRCB, .BOC, .CCB, .CDCB, .CEB, .CIB, .CITIC, .CMB, .CMBC, .COMM, .FDB, .GDB, .HZCB, .ICBC, .NBBANK, .PSBC, .SHBANK, .SHRCB, .SPABANK, .SPDB, .WZCB {text-indent: -9999px; background-image: url("../images/sinapaybanks.png");} 
 .ABC {background-position: 0px -0px; } 
-.BJBANK {background-position: 0px -36px; } 
+.BCCB,.BJBANK {background-position: 0px -36px; } 
 .BJRCB {background-position: 0px -72px; } 
 .BOC {background-position: 0px -108px; } 
 .CCB {background-position: 0px -144px; } 
@@ -330,11 +330,13 @@ z-index: 1;
 .ICBC {background-position: 0px -540px; } 
 .NBBANK {background-position: 0px -576px; } 
 .PSBC {background-position: 0px -612px; } 
-.SHBANK {background-position: 0px -648px; } 
+.BOS,.SHBANK {background-position: 0px -648px; } 
 .SHRCB {background-position: 0px -684px; } 
-.SPABANK {background-position: 0px -720px; } 
+.SZPAB,.SPABANK {background-position: 0px -720px; } 
 .SPDB {background-position: 0px -756px; } 
 .WZCB {background-position: 0px -792px; } 
+.HXB {background-position: 0px -828px; } 
+.UPOP {background-position: 0px -864px; } 
 
 
 #paycenter_area{

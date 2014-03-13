@@ -6,6 +6,13 @@ $_order = Mage::getModel('sales/order');
 $_order->loadByIncrementId($session->getLastRealOrderId());
 ?>
 <script type="text/javascript" src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://libs.baidu.com/jqueryui/1.10.2/jquery-ui.min.js"></script>
+<script type="text/javascript">
+jQuery.noConflict();
+jQuery(function() {
+	jQuery( "#paycenter_area" ).tabs();
+});
+</script>
 
 <div class="shortcut_wrapper">
     <div class="shortcut_price">
@@ -15,52 +22,70 @@ $_order->loadByIncrementId($session->getLastRealOrderId());
           
     <div class="shortcut_content shortcut_content02">
         <div id="paycenter_area">
-            <h4><span id="go_tab3" class="now">支付平台</span></h4>
-            <div id="tab3" class="shortcut_bank" style="display: block;">
+            <ul style="border-bottom: 1px solid #ff8e42;height: 38px;">
+                <li><a href="#tabs-1"><h4><span  >支付平台</span></h4></a></li>
+                <li><a href="#tabs-2"><h4><span  >网上银行</span></h4></a></li>
+            </ul>
+            <div style="clear:both;"></div>
+            
+            
+            
+            <div id="tabs-1" >
 
-                <div id="tab3firstpay" style="display:block;">
                     <div class="shortcut_bank_list list_deep">
                         <h5><span class="icon"></span><span>支付平台</span></h5>
                         <div class="shortcut_bank_box"> 
                         <ul  class="shortcut_bank_table shortcut_bank_web">
 
                         <li class="bank_item">
-                        <p class="bank_select" bid="51"><input type="radio" name="bank" checked="checked"><span class="pic"><img src="<?php echo $this->getSkinUrl('images/logoL.png'); ?>" id="Repeater2_ctl03_imgBank2" width="113" height="36"></span></p>
+                        <p class="bank_select" ><input type="radio" name="bank" checked="checked"><span class="pic"><img src="<?php echo $this->getSkinUrl('images/logoL.png'); ?>" id="Repeater2_ctl03_imgBank2" width="113" height="36"></span></p>
                         <p class="hint">微博钱包</p>                  
                         </li>      
                         </ul>
                         </div>
                     </div>
-                    <button type="submit" title="下订单" class="button btn-checkout" onclick="payorder();"><span><span>下订单</span></span></button>
-                    <script type="text/javascript">
-                    function payorder(){
-                    
-                        var left  = (jQuery(window).width()/2)-(900/2),
-                        top   = (jQuery(window).height()/2)-(600/2);
-    
-    
-                        window.open('<?php echo $this->getUrl('sinapay/payment/redirect'); ?>');
-                        
-                        var left  = (jQuery(window).width()/2)-(392/2),
-                        top   = (jQuery(window).height()/2)-(160/2);
-                        jQuery('#go_pay_window').show();
-                        jQuery('#go_pay_window').css('left',left+"px");
-                        jQuery('#go_pay_window').css('top',top+"px");
-
-                        
-                    }</script>
+                    <button type="submit" title="下订单" class="button btn-checkout" onclick="go_pay('<?php echo $this->getUrl('sinapay/payment/redirect'); ?>');"><span><span>下订单</span></span></button>
                     <?php
                     //echo $this->getChildHtml('redirect');
                     ?>
-                </div>
-            </div>    
+            </div>   
+            
+            <div id="tabs-2" >
+
+                    <div class="shortcut_bank_list list_deep">
+                        <h5><span class="icon"></span><span>网上银行(信用卡）</span></h5>
+                        <div class="shortcut_bank_box"> 
+                        <ul  class="shortcut_bank_table shortcut_bank_web">
+
+
+<?php
+
+
+$banks_options = Mage::getModel("sinapay/source_banks")->toOptionArray();
+foreach($banks_options as $banks_option){
+?>
+
+                        <li class="bank_item">
+                        <p class="bank_select" ><input type="radio" onclick="setBank('<?php echo $banks_option['value']; ?>');" name="bank"  value="<?php echo $banks_option['value']; ?>"><span title="<?php echo $banks_option['label']; ?>" class="<?php echo $banks_option['value']; ?> icon"></span></p>                  
+                        </li>  
+<?php
+}
+
+?>                       
+                        </ul>
+                        </div>
+                    </div>
+                    <button type="submit" title="下订单" class="button btn-checkout" onclick="go_pay('<?php echo $this->getUrl('sinapay/payment/redirect'); ?>',globalbank);"><span><span>下订单</span></span></button>
+                   
+            </div>   
+            
         </div>
     </div>
   <div class="bottom_hint">
     <div><a href="<?php echo $this->getUrl('sales/order/view',array('order_id'=>$_order->getId())); ?>" target="_blank">查看订单详情&gt;&gt;</a></div>
     <div class="title">付款遇到问题：</div>
     <p>联系我们 <span class="gray"> 客服帮助您解决支付过程中遇到的困难 <a href="<?php echo $this->getUrl('contacts'); ?>" target="_blank" >客服中心</a> </span></p>
-    <div><a href="http://help.sinapay.com/lab/index.htm" target="_blank">微博钱包帮助中心&nbsp;&gt;&gt;</a></div>
+    <div><a href="http://help.sinapay.com/lab/index.htm" target="_blank">支付宝帮助中心&nbsp;&gt;&gt;</a></div>
   </div>
 </div>
 
